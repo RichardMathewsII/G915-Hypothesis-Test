@@ -37,7 +37,7 @@ fig.show()
 ```
 ![distribution](assets/distribution.png)
 
-## Which Hypothesis Test?
+## Which Hypothesis Test do I Choose?
 
 There are many statistical tests, so which one applies best for this application? There are a few important considerations to make.
 * Are the samples normally distributed?
@@ -93,4 +93,4 @@ P-Value: 0.0003009267702446885
 The P-value from the paired samples t-test is 0.0003, which indicates that if the null hypothesis were true (samples means are equivalent), there would be a 0.03% probability of obtaining a t-statistic of 4.4 or greater, which is much less than the signficance level of 5%. Since the odds of obtaining this t-statistic for two mean-equivalent samples is so low, I can reject the null hypothesis and accept the alternative hypothesis that there is a statistically significant difference between my typing speeds on the laptop keyboard and the G915 keyboard. SciPy's paired sample t-test is two-tailed, so the P-value accounts for differences in both directions. However, it is obvious from the distribution plot that the typing speeds with Logitech's G915 is higher, not lower.
 
 ## Conclusion
-So, based on robust statistical testing, I can confidently say that I type faster on the Logitech G915 keyboard compared to my old laptop keyboard. As for the actual _cause_ of this, I don't know. All the paired sample t-test tells me is there _is_ a difference. I suspect it is the G915's mechanical build, with low travel distance, low key push force, tactile feedback, and optimal distance between keys. Or maybe it is the cool lighting effects. Who knows?
+So, based on robust statistical testing, I can confidently say that I type faster on the Logitech G915 keyboard compared to my old laptop keyboard. As for the actual _cause_ of this, I don't know. All the paired sample t-test tells me is that there _is_ a difference. I suspect it is the G915's mechanical build, with low travel distance, low key push force, tactile feedback, and optimal distance between keys. Or maybe it is the cool lighting effects. Who knows?
