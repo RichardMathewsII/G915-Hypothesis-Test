@@ -1,4 +1,5 @@
 ## Introduction
+![G915](assets/G915.jpeg)
 
 So I recently bought [Logitech's G915 wireless keyboard](https://www.logitechg.com/en-us/products/gaming-keyboards/g915-low-profile-wireless-mechanical-gaming-keyboard.html) because I wanted a good wireless programming keyboard to go with my new monitor, and this keyboard has been hyped to be one of the best keyboards for programming ([Cleus](https://www.youtube.com/watch?v=yMqDxF8c3cQ&t=98s), [Tech Lead](https://www.youtube.com/watch?v=fxCYXA2zPc8&t=788s), [RTINGS](https://www.rtings.com/keyboard/reviews/best/by-usage/programming)) and ranked as the [#1 wireless keyboard for productivity by Top 10](https://www.youtube.com/watch?v=CkpObvbDM8g). 
 
@@ -7,6 +8,8 @@ Ever since I switched from my laptop keyboard to the Logitech G915 keyboard, I f
 ## Gathering the Data
 
 I set aside some time to take a grand total of 40 typing tests throughout the day, 20 for both keyboards (spaced out to give my fingers some rest). For each trial, I did a one minute sentences typing test using [typingtest](https://www.typingtest.com/). To prevent any bias in the data collection, I alternated between my G915 and laptop. The results of the trials are displayed in a table below.
+
+![table](assets/trials_table.JPG)
 
 Let's load this data into a pandas DataFrame `WPM`.
 ```
@@ -32,6 +35,7 @@ fig.update_layout(title_text='Words Per Minute Distribution',
                   bargroupgap=0.1)
 fig.show()
 ```
+![distribution](assets/distribution.png)
 
 ## Which Hypothesis Test?
 
@@ -54,18 +58,20 @@ shapiro_test = shapiro(WPM['laptop'])
 print('Shapiro-Wilk Test Statistic for laptop:', shapiro_test[0])
 print('Shapiro-Wilk Test P-Value for laptop:', shapiro_test[1])
 ```
+```
 Shapiro-Wilk Test Statistic for G915: 0.9469935297966003
 Shapiro-Wilk Test P-Value for G915: 0.32374611496925354
 Shapiro-Wilk Test Statistic for laptop: 0.9591456651687622
 Shapiro-Wilk Test P-Value for laptop: 0.5269261002540588
+```
 
 Since the P-values are much higher than the significance level, 0.05, I retain the null hypothesis of normality. The best test is therefore the paired sample t-test!
 
 ## Formulate the Hypotheses
 Now that I have decided on the paired sample t-test, I can define the null and alternative hypotheses.
 
-**Null Hypothesis:** The mean difference between sample _laptop_ and sample _G915_ is equal to zero.
-**Alternative Hypothesis:** The mean difference between sample _laptop_ and sample _G915_ is not equal to zero.
+* **Null Hypothesis:** The mean difference between sample _laptop_ and sample _G915_ is equal to zero.
+* **Alternative Hypothesis:** The mean difference between sample _laptop_ and sample _G915_ is not equal to zero.
 
 The significance level for this test will be 0.05, so if the P-value is less than 0.05, I can reject the null hypothesis.
 
@@ -78,39 +84,13 @@ t_stat, p_val = paired_ttest(WPM['G915'], WPM['laptop'])
 print('t-statistic:', t_stat)
 print('P-Value:', p_val)
 ```
+```
 t-statistic: 4.409815777991463
 P-Value: 0.0003009267702446885
+```
 
 ## Interpreting Results
 The P-value from the paired samples t-test is 0.0003, which indicates that if the null hypothesis were true (samples means are equivalent), there would be a 0.03% probability of obtaining a t-statistic of 4.4 or greater, which is much less than the signficance level of 5%. Since the odds of obtaining this t-statistic for two mean-equivalent samples is so low, I can reject the null hypothesis and accept the alternative hypothesis that there is a statistically significant difference between my typing speeds on the laptop keyboard and the G915 keyboard. SciPy's paired sample t-test is two-tailed, so the P-value accounts for differences in both directions. However, it is obvious from the distribution plot that the typing speeds with Logitech's G915 is higher, not lower.
 
 ## Conclusion
 So, based on robust statistical testing, I can confidently say that I type faster on the Logitech G915 keyboard compared to my old laptop keyboard. As for the actual _cause_ of this, I don't know. All the paired sample t-test tells me is there _is_ a difference. I suspect it is the G915's mechanical build, with low travel distance, low key push force, tactile feedback, and optimal distance between keys. Or maybe it is the cool lighting effects. Who knows?
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/RichardMathewsII/G915-Hypothesis-Test/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
